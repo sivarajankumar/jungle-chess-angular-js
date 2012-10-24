@@ -17,12 +17,15 @@
 	
 	<div id="content" ng-app="jungle-chess" ng-controller="JungleChessController">
 	
+		<table id="playerColors">
+			<tr><td>Player 1:</td><td><div class="player1"></div></td></tr>
+			<tr><td>Player 2:</td><td><div class="player2"></div></td></tr>
+		</table>
+	
 		<div id="board">
 			<div class="row" ng-repeat="row in board">
 				<div class="cell" ng-repeat="cell in row" ng-class="cell.type">
-					<div class="animal-image-wrapper" ng-show="cell.animal">
-						<img ng-src="images/animals/{{cell.animal.name}}.png" class="contentImage" />
-					</div>
+					<img ng-show="cell.animal" ng-src="images/animals/{{cell.animal.name}}.png" class="contentImage" ng-class="cell.animal.player.name"/>
 				</div>
 			</div>
 		</div>
@@ -30,8 +33,6 @@
 		<button ng-click="resetBoard()">Reset board</button>
 	
 	</div>
-
-<!-- <img ng-src="{{cell.imageId}}" class="cellBackground" ng-show="cell.type"/> -->
 
 </body>
 </html>
