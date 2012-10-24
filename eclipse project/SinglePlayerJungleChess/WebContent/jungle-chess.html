@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Jungle Chess</title>
+	
+	<link rel="stylesheet" href="css/blueprint/reset.css" />
+	
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js"></script>
+	
+	<link rel="stylesheet" href="css/jungle-chess.css" />
+	<script type="text/javascript" src="js/jungle-chess.js"></script>
+</head>
+<body>
+
+	<h1>Jungle Chess</h1>
+	
+	<div id="content" ng-app="jungle-chess" ng-controller="JungleChessController">
+	
+		<div id="board">
+			<div class="row" ng-repeat="row in board">
+				<div class="cell" ng-repeat="cell in row" ng-class="cell.type">
+					<div class="animal-image-wrapper" ng-show="cell.animal">
+						<img ng-src="images/animals/{{cell.animal.name}}.png" class="contentImage" />
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<button ng-click="resetBoard()">Reset board</button>
+	
+	</div>
+
+<!-- <img ng-src="{{cell.imageId}}" class="cellBackground" ng-show="cell.type"/> -->
+
+</body>
+</html>

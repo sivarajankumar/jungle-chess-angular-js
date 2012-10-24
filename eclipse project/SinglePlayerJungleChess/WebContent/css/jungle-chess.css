@@ -1,0 +1,47 @@
+@CHARSET "ISO-8859-1";
+
+#board {
+	display: table;
+	border: 1px solid black;
+	border-collapse: true;
+	margin: 20px auto;
+}
+
+.row {
+	display: table-row;
+}
+
+.cell {
+	display: table-cell;
+	height: 100px;
+	width: 100px;
+	cursor: pointer;
+}
+
+.animal-image-wrapper {
+	overflow: hidden;
+	float: left;
+	width: 100px;
+    height: 100px;
+}
+
+.contentImage {
+	max-width:100%;
+    max-height:100%;
+}
+
+.grass {
+	background-image: url("../images/backgrounds/grass.png");
+}
+
+.water {
+	background-image: url("../images/backgrounds/water.png");
+}
+
+.trap {
+	background-image: url("../images/backgrounds/trap.png");
+}
+
+.den {
+	background-image: url("../images/backgrounds/den.png");
+}
