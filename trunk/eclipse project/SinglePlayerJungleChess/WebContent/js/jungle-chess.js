@@ -47,10 +47,10 @@ JungleChessController.prototype.createBoard = function() {
 		y : 6
 	} ];
 	var players = [ {
-		name : 'Player1',
+		name : 'player1',
 		startingPosition : 'top'
 	}, {
-		name : 'Player2',
+		name : 'player2',
 		startingPosition : 'bottom'
 	} ];
 
