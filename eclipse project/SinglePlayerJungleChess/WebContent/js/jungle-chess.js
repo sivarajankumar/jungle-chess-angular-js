@@ -187,17 +187,19 @@ JungleChessController.prototype.cellsAreFreeBetween = function(place, destinatio
 	if (place.x == destination.x) {
 		var beginY = place.y < destination.y ? place.y : destination.y;
 		var endY = place.y > destination.y ? place.y : destination.y;
-		for ( var i = beginY; i < endY; i++) {
+		for ( var i = beginY + 1; i < endY - 1; i++) {
 			if (board[place.x][i].animal)
 				return false;
 		}
+		return true;
 	} else if (place.y == destination.y) {
 		var beginX = place.x < destination.x ? place.x : destination.x;
 		var endX = place.x > destination.x ? place.x : destination.x;
-		for ( var i = beginX; i < endX; i++) {
+		for ( var i = beginX + 1; i < endX - 1; i++) {
 			if (board[i][place.y].animal)
 				return false;
 		}
+		return true;
 	} else
 		throw "You can't get here: free cells";
 };
