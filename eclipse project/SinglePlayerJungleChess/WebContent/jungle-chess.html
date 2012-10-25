@@ -16,22 +16,27 @@
 	<h1>Jungle Chess</h1>
 	
 	<div id="content" ng-app="jungle-chess" ng-controller="JungleChessController">
+
+		<div id="gameContainer">
 	
-		<table id="playerColors">
-			<tr><td>Player 1:</td><td><div class="player1"></div></td></tr>
-			<tr><td>Player 2:</td><td><div class="player2"></div></td></tr>
-		</table>
-	
-		<div id="board">
-			<div class="row" ng-repeat="row in board">
-				<div class="cell {{cell.type}}" ng-repeat="cell in row" ng-click="cellClicked($parent.$index, $index)">
-					<div ng-show="cell.selected || cell.movementShadow || cell.attackShadow" class="cell-overlay" ng-class="{ 'animal-selected' : cell.selected, 'move-shadow' : cell.movementShadow, 'attack-shadow' : cell.attackShadow  }"></div>
-					<img src="images/placeholder.png" ng-show="cell.animal" ng-src="{{cell.getAnimalPicture()}}" class="contentImage" ng-class="cell.animal.player.name"/>
+			<table id="playerColors">
+				<tr><td>Player 1:</td><td><div class="player1"></div></td></tr>
+				<tr><td>Player 2:</td><td><div class="player2"></div></td></tr>
+			</table>
+		
+			<div id="board">
+				<div class="row" ng-repeat="row in board">
+					<div class="cell {{cell.type}}" ng-repeat="cell in row" ng-click="cellClicked($parent.$index, $index)">
+						<div ng-show="cell.selected || cell.movementShadow || cell.attackShadow" class="cell-overlay" ng-class="{ 'animal-selected' : cell.selected, 'move-shadow' : cell.movementShadow, 'attack-shadow' : cell.attackShadow  }"></div>
+						<img src="images/placeholder.png" ng-show="cell.animal" ng-src="{{cell.getAnimalPicture()}}" class="contentImage" ng-class="cell.animal.player.name"/>
+						<p class="power-level" ng-show="cell.animal">{{cell.animal.powerLevel}}</p>
+					</div>
 				</div>
 			</div>
-		</div>
+			
+			<button ng-click="resetBoard()">Reset board</button>
 		
-		<button ng-click="resetBoard()">Reset board</button>
+		</div>
 	
 	</div>
 

@@ -1,5 +1,10 @@
 @CHARSET "ISO-8859-1";
 
+body {
+	height: 100%;
+	background-color: lightgrey;
+}
+
 /* player colors */
 #playerColors div {
 	width: 40px;
@@ -7,19 +12,19 @@
 }
 
 div.player1 {
-	background-color: red;
+	background-color: cyan;
 }
 
 div.player2 {
-	background-color: teal;
+	background-color: magenta;
 }
 
 img.player1 {
-	border: 1px solid red;
+	border: 1px solid cyan;
 }
 
 img.player2 {
-	border: 1px solid teal;
+	border: 1px solid magenta;
 }
 
 /* game board */
@@ -50,6 +55,17 @@ img.player2 {
 	display: inline-block;
 }
 
+.power-level {
+	z-index: 1;
+	position: absolute;
+	left: 50%;
+	bottom: 5px;
+	color: red;
+	font-weight: bold; 
+}
+
+/* cell backgrounds */
+
 .grass {
 	background-image: url("../images/backgrounds/grass.png");
 }
@@ -65,6 +81,8 @@ img.player2 {
 .den {
 	background-image: url("../images/backgrounds/den.png");
 }
+
+/* highlighted cells */
 
 .cell.highlighted img {
 	border: 1px solid orange;
@@ -91,3 +109,4 @@ img.player2 {
 .attack-shadow {
 	background-color: red;
 }
+
