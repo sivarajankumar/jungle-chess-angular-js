@@ -195,8 +195,8 @@ JungleChessController.prototype.cellsAreFreeBetween = function(place, destinatio
 			if (board[i][place.y].animal)
 				return false;
 		}
-	}
-	throw "You can't get here: free cells";
+	} else
+		throw "You can't get here: free cells";
 };
 
 JungleChessController.prototype.canMove = function(place, destination) {
