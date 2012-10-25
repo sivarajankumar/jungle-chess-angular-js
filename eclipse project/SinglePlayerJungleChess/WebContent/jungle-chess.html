@@ -24,8 +24,9 @@
 	
 		<div id="board">
 			<div class="row" ng-repeat="row in board">
-				<div class="cell" ng-repeat="cell in row" ng-class="cell.type">
-					<img ng-show="cell.animal" ng-src="images/animals/{{cell.animal.name}}.png" class="contentImage" ng-class="cell.animal.player.name"/>
+				<div class="cell {{cell.type}}" ng-repeat="cell in row" ng-click="cellClicked($parent.$index, $index)">
+					<div ng-show="cell.selected || cell.movementShadow || cell.attackShadow" class="cell-overlay" ng-class="{ 'animal-selected' : cell.selected, 'move-shadow' : cell.movementShadow, 'attack-shadow' : cell.attackShadow  }"></div>
+					<img src="images/placeholder.png" ng-show="cell.animal" ng-src="{{cell.getAnimalPicture()}}" class="contentImage" ng-class="cell.animal.player.name"/>
 				</div>
 			</div>
 		</div>
