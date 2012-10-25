@@ -1,5 +1,8 @@
 angular.module('jungle-chess', []);
 
+// TODO alternate rules
+// TODO multiplayer
+
 function JungleChessController($scope) {
 	var controller = this;
 	this.players = [ {
