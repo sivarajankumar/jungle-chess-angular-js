@@ -179,14 +179,6 @@ JungleChessController.prototype.getNeighbors = function(board, rowIndex, columnI
 	return neighbors;
 };
 
-JungleChessController.prototype.canSwim = function(animal) {
-	return animal.name == 'Rat';
-};
-
-JungleChessController.prototype.canJump = function(animal, distance) {
-	return animal.name == 'Tiger' || animal.name == 'Lion';
-};
-
 JungleChessController.prototype.cellsAreFreeBetween = function(place, destination) {
 	var board = this.scope.board;
 	if (place.x == destination.x) {
@@ -210,11 +202,11 @@ JungleChessController.prototype.cellsAreFreeBetween = function(place, destinatio
 JungleChessController.prototype.canMove = function(place, destination) {
 	var distance = boardMath.lineDistance(place, destination);
 	if (distance > 1) {
-		return this.canJump(place.animal, distance) && this.cellsAreFreeBetween(place, destination);
+		return place.animal.canJump(distance) && this.cellsAreFreeBetween(place, destination);
 	}
 	// only the rat can swim
 	if (destination.type == this.types.water)
-		return this.canSwim(place.animal);
+		return place.animal.canSwim();
 	// can't move into own den
 	if (destination.type == this.types.den)
 		return place.animal.player != destination.player;
@@ -222,20 +214,6 @@ JungleChessController.prototype.canMove = function(place, destination) {
 	if (destination.type == this.types.grass || destination.type == this.types.trap)
 		return true;
 	throw "You can't get here: canMove";
-};
-
-JungleChessController.prototype.canKill = function(attacker, defender) {
-	// a larger animal may attack a smaller or equal one
-	if (attacker.powerLevel >= defender.powerLevel) {
-		return true;
-	}
-	// rat may attack elephant
-	if (attacker.name == 'Rat' && defender.name == 'Elephant')
-		return true;
-	// a smaller animal may not attack a larger one
-	if (attacker.powerLevel < defender.powerLevel) {
-		return false;
-	}
 };
 
 JungleChessController.prototype.canAttack = function(place, destination) {
@@ -249,52 +227,21 @@ JungleChessController.prototype.canAttack = function(place, destination) {
 	// check jumping
 	var distance = boardMath.lineDistance(place, destination);
 	if (distance > 1) {
-		return this.canJump(attacker, distance) && this.canKill(attacker, defender) && this.cellsAreFreeBetween(place, destination);
+		return attacker.canJump(distance) && attacker.canKill(defender) && this.cellsAreFreeBetween(place, destination);
 	}
 	// if the enemy is on your trap, it can be attacked by anything
 	if (destination.type == this.types.trap && destination.player == place.animal.player) {
 		return true;
 	}
 	// regular attack
-	return this.canKill(attacker, defender);
+	return attacker.canKill(defender);
 	throw "You can't get here: canAttack";
 };
 
 JungleChessController.prototype.createBoard = function() {
 	var board = [];
-	var animals = [ {
-		name : 'Rat',
-		x : 2,
-		y : 0
-	}, {
-		name : 'Cat',
-		x : 1,
-		y : 5
-	}, {
-		name : 'Dog',
-		x : 1,
-		y : 1
-	}, {
-		name : 'Wolf',
-		x : 2,
-		y : 4
-	}, {
-		name : 'Leopard',
-		x : 2,
-		y : 2
-	}, {
-		name : 'Tiger',
-		x : 0,
-		y : 6
-	}, {
-		name : 'Lion',
-		x : 0,
-		y : 0
-	}, {
-		name : 'Elephant',
-		x : 2,
-		y : 6
-	} ];
+	var animals = [ new Animal('Rat', 2, 0), new Animal('Cat', 1, 5), new Animal('Dog', 1, 1), new Animal('Wolf', 2, 4),
+			new Animal('Leopard', 2, 2), new Animal('Tiger', 0, 6), new Animal('Lion', 0, 0), new Animal('Elephant', 2, 6) ];
 	var players = this.players;
 	var types = this.types;
 
@@ -308,10 +255,10 @@ JungleChessController.prototype.createBoard = function() {
 				type : 'grass',
 				x : i,
 				y : j,
-				getAnimalPicture : function(){
+				getAnimalPicture : function() {
 					if (this.animal)
 						return "images/animals/" + this.animal.name + ".png";
-					else 
+					else
 						return '';
 				}
 			});
@@ -366,6 +313,37 @@ JungleChessController.prototype.createBoard = function() {
 	}
 
 	return board;
+};
+
+function Animal(name, startingX, startingY, powerLevel, player) {
+	this.name = name;
+	this.x = startingX;
+	this.y = startingY;
+	this.powerLevel = powerLevel || 0;
+	this.player = player;
+}
+
+Animal.prototype.canSwim = function() {
+	return this.name == 'Rat';
+};
+
+Animal.prototype.canJump = function(distance) {
+	return this.name == 'Tiger' || this.name == 'Lion';
+};
+
+Animal.prototype.canKill = function(defender) {
+	var attacker = this;
+	// a larger animal may attack a smaller or equal one
+	if (attacker.powerLevel >= defender.powerLevel) {
+		return true;
+	}
+	// rat may attack elephant
+	if (attacker.name == 'Rat' && defender.name == 'Elephant')
+		return true;
+	// a smaller animal may not attack a larger one
+	if (attacker.powerLevel < defender.powerLevel) {
+		return false;
+	}
 };
 
 var boardMath = {
