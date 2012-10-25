@@ -2,6 +2,7 @@ angular.module('jungle-chess', []);
 
 // TODO alternate rules
 // TODO multiplayer
+// TODO display animal power level on picture
 
 function JungleChessController($scope) {
 	var controller = this;
