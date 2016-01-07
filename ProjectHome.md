@@ -1,0 +1,1 @@
+Finished project. Continued in jungle-chess-angular-js-jsp where I have implemented some known alternate rules for the game.
